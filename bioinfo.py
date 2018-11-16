@@ -32,8 +32,9 @@ def amino_acids_count(df, amn_list):
 def split_DNA(seq,n):
     return [seq[i:i+n] for i in range(0, len(seq), n)]
 
-def gen_df2(seq,n):
+def gen_df2(name,seq,n):
     df2 = pd.DataFrame(split_DNA(seq,24))
+    df2.name = name
     df2.columns = ['Fragment']
     for codon in defcodons(n):
         df2[codon] = df2['Fragment'].apply(lambda frag: float(frag.count(codon)))
@@ -87,14 +88,16 @@ def pca(df):
     principalDf = pd.DataFrame(data = principalComponents, 
             columns = ['principal component 1', 'principal component 2'])
     
-    return pd.concat([principalDf, df[['Fragment']]], axis = 1)
+    finaldDf = pd.concat([principalDf, df[['Fragment']]], axis = 1)
+    finaldDf.name = df.name
+    return finaldDf
 
 def plot_pca(finalDf):
     fig = plt.figure(figsize = (8,8))
     ax = fig.add_subplot(1,1,1)
     ax.set_xlabel('Principal Component 1', fontsize = 15)
     ax.set_ylabel('Principal Component 2', fontsize = 15)
-    ax.set_title('2 component PCA', fontsize = 20)
+    ax.set_title(finalDf.name, fontsize = 20)
     
     ax.scatter(finalDf.loc[:, 'principal component 1'], finalDf.loc[:, 'principal component 2'])
     
