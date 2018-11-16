@@ -1,6 +1,9 @@
 import pandas as pd
 import matplotlib.pyplot as plt
 from Bio.Seq import Seq
+import itertools
+
+lstamn = ['A','C','G','T']
 
 amn_list = [['Adenine','A'],
  ['Cytosine','C'],
@@ -11,9 +14,10 @@ amn_list = [['Adenine','A'],
  ['Pyrimidines','T','U'],
  ['Non-identified','N']]
 
-codon_list = ['AA','AC','AT']
-
 plot_list = ['Adenine','Cytosine','Guanine','Thymine','Non-identified']
+
+def defcodons(n):
+    return list(map((lambda element: ''.join(list(element))), itertools.product(lstamn,repeat=n)))
 
 def amino_acids_count(df, amn_list):
     for amn in amn_list:
@@ -26,9 +30,12 @@ def amino_acids_count(df, amn_list):
 def split_DNA(seq,n):
     return [seq[i:i+n] for i in range(0, len(seq), n)]
 
-def codon_count(codon,slicedDNA):
-    return sum(list(map(lambda x: x.count(codon),slicedDNA)))
-
+def gen_df2(seq,n):
+    df2 = pd.DataFrame(split_DNA(seq,24))
+    df2.columns = ['Fragment']
+    for codon in defcodons(n):
+        df2[codon] = df2['Fragment'].apply(lambda frag: frag.count(codon))
+    return df2
 
 def gen_df(infile):
     with open(infile, 'r') as myfile:
@@ -53,9 +60,6 @@ def gen_df(infile):
     df['Species'] = df['Species'].apply(lambda s: s.replace(' ','-'))
     df['Length'] = df['Sequence'].apply(lambda seq: len(seq))
     df = amino_acids_count(df, amn_list)
-    df['Split'] = df['Sequence'].apply(lambda seq: split_DNA(seq,300))
-    for codon in codon_list:
-            df[codon] = df['Split'].apply(lambda slicedDNA: codon_count(codon,slicedDNA))
     return df 
 
 def amino_plot(plot_list):
