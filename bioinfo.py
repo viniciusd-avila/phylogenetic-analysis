@@ -2,6 +2,8 @@ import pandas as pd
 import matplotlib.pyplot as plt
 from Bio.Seq import Seq
 import itertools
+from sklearn.preprocessing import StandardScaler
+from sklearn.decomposition import PCA
 
 lstamn = ['A','C','G','T']
 
@@ -72,3 +74,28 @@ def tree_node_names(dnd_file, df):
     for i, j in rep.items():
         text = text.replace(i, j)
     return text
+
+def pca(df):
+    x = df.loc[:, df.columns != 'Fragment'].values
+    y = df.loc[:, df.columns == 'Fragment'].values
+    x = StandardScaler().fit_transform(x)
+    
+    pca = PCA(n_components=2)
+    
+    principalComponents = pca.fit_transform(x)
+    
+    principalDf = pd.DataFrame(data = principalComponents, 
+            columns = ['principal component 1', 'principal component 2'])
+    
+    return pd.concat([principalDf, df[['Fragment']]], axis = 1)
+
+def plot_pca(finalDf):
+    fig = plt.figure(figsize = (8,8))
+    ax = fig.add_subplot(1,1,1)
+    ax.set_xlabel('Principal Component 1', fontsize = 15)
+    ax.set_ylabel('Principal Component 2', fontsize = 15)
+    ax.set_title('2 component PCA', fontsize = 20)
+    
+    ax.scatter(finalDf.loc[:, 'principal component 1'], finalDf.loc[:, 'principal component 2'])
+    
+    ax.grid()
