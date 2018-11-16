@@ -26,9 +26,8 @@ def amino_acids_count(df, amn_list):
 def split_DNA(seq,n):
     return [seq[i:i+n] for i in range(0, len(seq), n)]
 
-def codon_count(codon_list,seq,n):
-    sseq = split_DNA(seq,n)
-    return [sum(list(map(lambda x: x.count(codon),sseq))) for codon in codon_list]
+def codon_count(codon,slicedDNA):
+    return sum(list(map(lambda x: x.count(codon),slicedDNA)))
 
 
 def gen_df(infile):
@@ -55,6 +54,8 @@ def gen_df(infile):
     df['Length'] = df['Sequence'].apply(lambda seq: len(seq))
     df = amino_acids_count(df, amn_list)
     df['Split'] = df['Sequence'].apply(lambda seq: split_DNA(seq,300))
+    for codon in codon_list:
+            df[codon] = df['Split'].apply(lambda slicedDNA: codon_count(codon,slicedDNA))
     return df 
 
 def amino_plot(plot_list):
