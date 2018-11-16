@@ -1,6 +1,9 @@
 import pandas as pd
 import matplotlib.pyplot as plt
 from Bio.Seq import Seq
+import itertools
+
+lstamn = ['A','C','G','T']
 
 amn_list = [['Adenine','A'],
  ['Cytosine','C'],
@@ -13,6 +16,9 @@ amn_list = [['Adenine','A'],
 
 plot_list = ['Adenine','Cytosine','Guanine','Thymine','Non-identified']
 
+def defcodons(n):
+    return list(map((lambda element: ''.join(list(element))), itertools.product(lstamn,repeat=n)))
+
 def amino_acids_count(df, amn_list):
     for amn in amn_list:
         df[amn[0]] = 0.0
@@ -20,6 +26,16 @@ def amino_acids_count(df, amn_list):
             df[amn[0]] = df[amn[0]] + df['Sequence'].apply(lambda seq:seq.count(letter))
         df[amn[0]] = df[amn[0]]/df['Length']
     return df
+
+def split_DNA(seq,n):
+    return [seq[i:i+n] for i in range(0, len(seq), n)]
+
+def gen_df2(seq,n):
+    df2 = pd.DataFrame(split_DNA(seq,24))
+    df2.columns = ['Fragment']
+    for codon in defcodons(n):
+        df2[codon] = df2['Fragment'].apply(lambda frag: frag.count(codon))
+    return df2
 
 def gen_df(infile):
     with open(infile, 'r') as myfile:
@@ -31,7 +47,7 @@ def gen_df(infile):
     for i in range(len(data)):
         data[i] = data[i].split('\n',maxsplit=1)
         if len(data[i]) > 1:
-            dic[data[i][0]] = Seq(str(data[i][1].replace('\n','').split()))
+            dic[data[i][0]] = data[i][1].replace('\n','')
     
     df = pd.DataFrame.from_dict(dic,orient='index')
     df.columns = ['Sequence']
@@ -43,7 +59,8 @@ def gen_df(infile):
     df.reset_index(level=0, inplace=True)
     df['Species'] = df['Species'].apply(lambda s: s.replace(' ','-'))
     df['Length'] = df['Sequence'].apply(lambda seq: len(seq))
-    return amino_acids_count(df, amn_list)
+    df = amino_acids_count(df, amn_list)
+    return df 
 
 def amino_plot(plot_list):
     return df[plot_list].plot(kind='bar', title ="V comp", figsize=(15, 10), legend=True, stacked=True,fontsize=12)
