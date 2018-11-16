@@ -36,7 +36,7 @@ def gen_df2(seq,n):
     df2 = pd.DataFrame(split_DNA(seq,24))
     df2.columns = ['Fragment']
     for codon in defcodons(n):
-        df2[codon] = df2['Fragment'].apply(lambda frag: frag.count(codon))
+        df2[codon] = df2['Fragment'].apply(lambda frag: float(frag.count(codon)))
     return df2
 
 def gen_df(infile):
