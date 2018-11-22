@@ -33,11 +33,12 @@ def split_DNA(seq,n):
     return [seq[i:i+n] for i in range(0, len(seq), n)]
 
 def gen_df2(name,seq,n):
-    df2 = pd.DataFrame(split_DNA(seq,24))
-    df2.name = name
+    df2 = pd.DataFrame(split_DNA(seq,12))
     df2.columns = ['Fragment']
+    df2 = df2[df2['Fragment'].apply(lambda x: set(x)) != set('N')] #Remove informação de amino ácidos não identificados 
     for codon in defcodons(n):
         df2[codon] = df2['Fragment'].apply(lambda frag: float(frag.count(codon)))
+    df2.name = name
     return df2
 
 def gen_df(infile):
