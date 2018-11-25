@@ -63,18 +63,20 @@ se realizada apropriadamente, esta comparação pode ser mais objetiva e menos a
 Os organismos relacionados evolutivamente possuem um ancestral comum, com uma sequencia ancestral de DNA. A medida que os organismos evoluem e divergem, suas sequencias de DNA vão acumulando diferenças, chamadas de mutações.
 Os tipos mais comuns de mutações são conehcidos como SNP (single nucleotide polymorphism) e Indels
 
-## 2.3. Árvore Filogenética
-A construção da árvore filogenética das 17 espécies estudadas encontra-se no notebook 'PhylogeneticTree.ipynb'. O alinhamento e a árvore foram feitas utilizando a biblioteca Biopython e uma das visualizações exploradas encontra-se a seguir:
+### 2.3. Árvore Filogenética
+A construção da árvore filogenética das 17 espécies estudadas encontra-se no notebook 'PhylogeneticTree.ipynb'. O alinhamento e a árvore foram feitas utilizando a biblioteca Biopython e uma das visualizações exploradas com o Matplotlib encontra-se a seguir:
 
 ![image](tree.png)
 
-## 
+## 3. Usando Machine Learning para decifrar o genoma
+Machine Learning (em português, Aprendizado de Máquina) explora o estudo e construção de algoritmos para coletar dados, aprender com eles, e então fazer uma determinação ou predição sobre os dados. Dentre os vários tipos de aprendizado, iremos explorar o aprendizado por representação PCA (principal components analysis).
 
-
-## PCA: 
+### 3.1. Breve resumo do método PCA 
 O método de redução da dimensionalidade do PCA é um método de redução de dimensionalidade linear. Ele funciona projetando um número de variáveis correlacionadas em um número (menor) de variáveis não correlacionadas, chamadas componentes principais.
-O primeiro componente principal é responsável pela maior parte da variabilidade dados possíveis, e cada componente sucessor é responsável por tanto a variabilidade restante quanto possível. O algoritmo resolve os autovalores e autovetores de uma matriz simétrica quadrada com somas de quadrados e cruz produtos. O autovetor associado ao maior autovalor tem o mesmo direção como o primeiro componente principal. O autovetor associado a o segundo maior autovalor determina a direção do segundo principal componente. A soma dos autovalores é igual ao traço da matriz quadrada e o número máximo de autovetores é igual ao número de linhas (ou
-colunas) desta matriz.
+O primeiro componente principal é responsável pela maior parte da variabilidade dados possíveis, e cada componente sucessor é responsável por tanto a variabilidade restante quanto possível. O algoritmo resolve os autovalores e autovetores de uma matriz simétrica quadrada com somas de quadrados e cruz produtos. O autovetor associado ao maior autovalor tem a mesma direção do primeiro componente principal. O autovetor associado ao segundo maior autovalor determina a direção do segundo componente principal. A soma dos autovalores é igual ao traço da matriz quadrada e o número máximo de autovetores é igual ao número de linhas (ou colunas) desta matriz.
+
+### 3.2. 
+codons/matriz/pca
 
 ## Referências
 * [1] Sawyer SL, Wu LI, Emerman M, Malik HS. Positive selection of primate
