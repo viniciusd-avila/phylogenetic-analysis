@@ -91,3 +91,5 @@ PMID: 15689398; PubMed Central PMCID: PMC549489.
 Philippe Lemey, Marco Salemi, and Anne-Mieke Vandamme (eds.). 2009.
 * [Positive selection of primate _TRIM5α_ identifies a critical species-specific retroviral restriction domain.](https://www.ncbi.nlm.nih.gov/pmc/articles/PMC549489/)
 
+* [PCA](http://abrantesfilho.com/data-science/2017/11/04/pca-kmeans-genoma.html)
+
