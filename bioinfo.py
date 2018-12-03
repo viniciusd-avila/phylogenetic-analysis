@@ -103,3 +103,23 @@ def plot_pca(finalDf):
     ax.scatter(finalDf.loc[:, 'principal component 1'], finalDf.loc[:, 'principal component 2'])
     
     ax.grid()
+
+def lavenshtein_dist(stringA,stringB):
+    m = len(stringA)
+    n = len(stringB)
+    
+    d = np.zeros(shape=(m,n))
+
+    d[0,:] = np.arange(1,n+1)
+    d[:,0] = np.arange(1,m+1)
+    
+    for j in range(1,n):
+        for i in range(1,m):
+            if stringA[i] == stringB[j]:
+                d[i, j] = d[i-1, j-1]    
+            else:
+                d[i,j] = min(d[i-1,j] + 1,
+                                d[i,j-1],
+                                d[i-1,j-1] + 1)
+                
+    return d[m-1,n-1] - 1
