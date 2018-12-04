@@ -5,6 +5,7 @@ from Bio.Seq import Seq
 import itertools
 from sklearn.preprocessing import StandardScaler
 from sklearn.decomposition import PCA
+from sklearn.cluster import KMeans
 
 lstamn = ['A','C','G','T']
 
@@ -36,7 +37,7 @@ def split_DNA(seq,n):
 def gen_df2(name,seq,n):
     df2 = pd.DataFrame(split_DNA(seq,12))
     df2.columns = ['Fragment']
-   # df2 = df2[df2['Fragment'].apply(lambda x: set(x)) != set('N')] #Remove informação de amino ácidos não identificados 
+    df2 = df2[df2['Fragment'].apply(lambda x: set(x)) != set('N')] #Remove informação de amino ácidos não identificados 
     for codon in defcodons(n):
         df2[codon] = df2['Fragment'].apply(lambda frag: float(frag.count(codon)))
     df2.name = name
@@ -124,3 +125,17 @@ def lavenshtein_dist(stringA,stringB):
                                 d[i-1,j-1] + 1)
                 
     return d[m-1,n-1] - 1
+
+from sklearn.cluster import KMeans
+
+def kmeans_plot(X,n):
+    kmeans = KMeans(n_clusters=n)
+    kmeans.fit(X)
+    y_kmeans = kmeans.predict(X)
+
+    plt.scatter(X[:, 0], X[:, 1], c=y_kmeans, s=50, cmap='viridis')
+
+    centers = kmeans.cluster_centers_
+    plt.scatter(centers[:, 0], centers[:, 1], c='black', s=200, alpha=0.5);
+
+
