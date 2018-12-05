@@ -80,7 +80,7 @@ Foram dois os métodos abordados para contrução da árvore filogenética. O pr
 ### 4.1. Clustal
 O Clustal foi importado do pacote Biopython. Seu algoritmo rápido faz uso de aproximações para calcular as pontuações de similaridade entre sequências, que por sua vez produzem os alinhamentos em pares. O algoritmo funciona por meio do cálculo das pontuações de similaridade representando uma penalidade definida para as lacunas. Quanto mais semelhantes forem as sequências, quanto maior a pontuação, mais divergentes, menores os escores. Uma vez que as seqüências são pontuadas, um dendrograma é gerado através do UPGMA ou do método Neighbor Joining para representar a ordenação do alinhamento de múltiplas seqüências. Os conjuntos ordenados mais altos de sequências são alinhados primeiro, seguidos pelo resto em ordem decrescente. O algoritmo permite conjuntos de dados muito grandes e funciona rápido. 
 
-A construção da árvore filogenética das 17 espécies estudadas encontra-se no notebook 'PhylogeneticTree.ipynb'. O alinhamento e a árvore foram feitas utilizando a biblioteca Biopython e uma das visualizações exploradas com o Matplotlib encontra-se a seguir:
+A construção da árvore filogenética das 17 espécies estudadas encontra-se no notebook 'New_Phylo.ipynb'. O alinhamento e a árvore foram feitas utilizando a biblioteca Biopython e uma das visualizações exploradas com o Matplotlib encontra-se a seguir:
 
 ![image](tree.png)
 
