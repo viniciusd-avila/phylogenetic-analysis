@@ -137,5 +137,23 @@ def kmeans_plot(X,n):
 
     centers = kmeans.cluster_centers_
     plt.scatter(centers[:, 0], centers[:, 1], c='black', s=200, alpha=0.5);
+    
+
+###############################################################################################################################
+#    A função abaixo é o primeiro passo da implementação do Neighbor Joining, como importamos o método a função deixou de ser #
+# utilizada no código. 
+    
+def Q_matrix(matrix): 
+    Q_matrix = matrix
+    for i in range(len(matrix)):
+        
+        for j in range(len(matrix)):
+            if i == j:
+                Q_matrix[i,j]== 0
+            else:
+                Q_matriz[i,j] = (len(matriz) - 2)*matrix[i,j] - np.sum(matrix[:,i]) - np.sum(matrix[:,j])
+                    
+    return Q_matriz
+
 
 
