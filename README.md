@@ -64,13 +64,13 @@ As sequências moleculares, (DNA, RNA, proteínas) também são usadas para estu
 Os organismos relacionados evolutivamente possuem um ancestral comum, com uma sequência ancestral de DNA. A medida que os organismos evoluem e divergem, suas sequencias de DNA vão acumulando diferenças, chamadas de mutações. Os tipos mais comuns de mutações são conhecidos como SNP (single nucleotide polymorphism) e Indels.
 
 
-# 3. Explorando os Dados
+## 3. Explorando os Dados
 Com os 17 fragmentos foi criado um data frame com o nome da espécie e sua respectiva sequência de amino ácidos. Uma sequência é formada pelas letras A, C, T e G que significam respectivamente Adenina, Citosina, Tinina e Guanina. Existem ainda algumas regiões da sequência que não tiveram seus amino ácidos identificados e aparecem na sequência como N. 
 Foi explorado a proporção de cada amino ácido no gene destes 17 animais, bem como a proporção de amino ácidos não identificados.
 
-![image] 
 
-## 3.1 Usando Machine Learning para decifrar o genoma
+
+### 3.1 Usando Machine Learning para decifrar o genoma
 Machine Learning (em português, Aprendizado de Máquina) explora o estudo e construção de algoritmos para coletar dados, aprender com eles, e então fazer uma determinação ou predição sobre os dados.
 
 
