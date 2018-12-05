@@ -89,28 +89,35 @@ A construção da árvore filogenética das 17 espécies estudadas encontra-se n
 A distância Levenshtein é um método para comparação de duas "strings" (duas sequências de caracteres) é dada pelo número mínimo de operações necessárias para transformar uma string na outra. Onde é dado por "operações" a inserção, deleção ou substituição de um carácter. Ela é usada para contrução da matriz de distância das espácies, uma matriz 17 x 17, simétrica de diagonal nula, com as comparações duas a duas das distãncias entre espécies.
 Observe a distância entre as 17 espécies dada pela intensidade das cores na visualização abaixo:
 
-[imagem azul lavenshtein]
+![image](lavenshtein_distance.png)
 
 
 Para formação da árvore, levando em consideração o peso das arestas entre as espácies foi utilizado o método Neighbor Joining, um método de agrupamento de baixo para cima (aglomerativo) para a criação de árvores filogenéticas.
 
 As funções para implementação destes métodos se encontram no módulo bioinfo.py e sua execução está no notebook 'PhylogeneticTree.ipynb'. 
 
-[tree2]
+![image](laven_tree.png)
 
 
 ## 5. Redução de Dimensões
  Comparamos dois métodos de redução de dimensões para visualização bidimensional da contagem da frequência de códons (grupos de 3 bases nitrogenadas da sequência), na intenção de realizar análises fundamentadas no modo que o organismo "lê" o código genético. Para isso comparamos o uso do PCA (Principal Components Analysis) e do t-SNE (T-Distributed Stochastic Neighbor Embedding). Nos dois aplicamos k-means e o DBSCAN para isolamento de possíveis clusters.
  
  ### 5.1. PCA
+ O método de redução da dimensionalidade do PCA é um método de redução de dimensionalidade linear. Ele funciona projetando um número de variáveis correlacionadas em um número (menor) de variáveis não correlacionadas, chamadas componentes principais. O primeiro componente principal é responsável pela maior parte da variabilidade dados possíveis, e cada componente sucessor é responsável por tanto a variabilidade restante quanto possível. O algoritmo resolve os autovalores e auto vetores de uma matriz simétrica quadrada com somas de quadrados e cruz produtos. O auto vetor associado ao maior autovalor tem a mesma direção do primeiro componente principal. O auto vetor associado ao segundo maior autovalor determina a direção do segundo componente principal. A soma dos autovalores é igual ao traço da matriz quadrada e o número máximo de auto vetores é igual ao número de linhas (ou colunas) desta matriz.
  
- [imagens PCA]
+ A visualização do método PCA a cada uma das espécies se encontra no notebook 'PCA.ipynb'.
  
  ### 5.2. t-SNE
- [imagens t-SNE]
+ O algoritmo do t-SNE compreende dois estágios principais. Primeiro, o t-SNE constrói uma distribuição de probabilidade sobre pares de objetos de alta dimensão, de tal forma que objetos similares têm uma alta probabilidade de serem escolhidos, enquanto pontos diferentes têm uma probabilidade extremamente pequena de serem escolhidos. Segundo, o t-SNE define uma distribuição de probabilidade similar sobre os pontos no mapa de baixa dimensão, e minimiza a divergência de Kullback-Leibler entre as duas distribuições em relação às localizações dos pontos no mapa.
+ Está é a visualização do método t-SNE para todas as espécies.
+ 
+ ![image](tSNE_all_species.png)
  
  
 ## Conclusões
+A partir do trabalho elaborado sobre estudo de bioinformática para DNA e filogenia, compreendemos o trabalho científico realizado em data sets de sequências de DNA utilizando aplicações de Data Science.
+	Verificamos com métodos mais rigorosos um cluster na árvore filogenética que corresponde as subdivisões de Macacos do Velho Mundo, Novo Mundo e Hominides. Esta aglomeração aponta uma possível especialização destes animais principalmente para justificar a evolução da proteína para restrição de HIV-1.
+	Concluímos assim o objetivo de analisar sequencias de genes homólogos e realizar a construção de uma árvore filogenética usando a proteína TRIM5alpha, bem como compreender e aplicar os métodos utilizando linguagem Python.
 
 
 ## Referências
