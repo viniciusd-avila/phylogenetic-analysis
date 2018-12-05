@@ -14,6 +14,7 @@ from sklearn.cluster import KMeans
 
 aminoacids = ['A','C','G','T']
 
+#['AAA','AAC','AGT',...]
 codons = list(map((lambda element: ''.join(list(element))), itertools.product(aminoacids,repeat=3)))
 
 def clustalw_alignment(filename):
@@ -22,6 +23,8 @@ def clustalw_alignment(filename):
     return AlignIO.read(filename + ".aln","clustal")
 
 def pca_2d(df):
+    #input: codon frequency dataframe
+    #output: 2d numpay array of principal components
     X = df.loc[:, codons].values
     X = StandardScaler().fit_transform(X)
     y = df.loc[:, codons].values
@@ -29,10 +32,14 @@ def pca_2d(df):
     return pca.fit_transform(X)
 
 def t_SNE(df):
+    #input: codon frequency dataframe
+    #output: 2d numpay array of t-SNE distribution
     tsne = TSNE(n_components=2, verbose=1, perplexity=40, n_iter=300) 
     return tsne.fit_transform(df.loc[:,codons].values)
 
 def kmeans_plot(k,X):
+    #input: k and a 2d-array
+    #output: K-Means cluster plot 
     kmeans = KMeans(n_clusters=k)
     kmeans.fit(X)
     y_means = kmeans.predict(X)
@@ -43,6 +50,9 @@ def kmeans_plot(k,X):
     plt.scatter(centers[:,0],centers[:,1],c='black',s=200,alpha=0.5)
 
 def dbscan_plot(X):
+    #input: 2d-array
+    #output: DBScan cluster plot, number of clusters
+
     db = DBSCAN(eps=0.3, min_samples=10).fit(X)
     core_samples_mask = np.zeros_like(db.labels_, dtype=bool) 
     core_samples_mask[db.core_sample_indices_] = True 
@@ -69,6 +79,8 @@ def dbscan_plot(X):
     plt.show()
 
 def clean_data(infile):
+    #input: fasta file of DNA fragments from multiple species
+    #output: dictionary of fragments for each species
     with open(infile,'r') as myfile:
         data=myfile.read()
 
@@ -82,6 +94,8 @@ def clean_data(infile):
     return dic
 
 def gen_species(dic,dim_red=False):
+    #input: dictionary of fragments of multiple species
+    #output: list of Species object instances
     species_list = []  
     for key in dic:     
         x = Species(key.split(' ')[1] + ' ' + key.split(' ')[2], key.split(' ')[0],dic[key],dim_red)     
@@ -89,12 +103,16 @@ def gen_species(dic,dim_red=False):
     return species_list
 
 def species_name_list(species_list):
+    #input: list of Species object instances
+    #output: list of their names
     res = []
     for species in species_list:
         res.append(species.name)
     return res
 
 def tree_nodes_names(dnd_file,species_list):
+    #input: tree file in dnd format, species list
+    #output: swaps accession number in the tree with the species scientific name
     dic = {}
     for species in species_list:
         dic[species.accession_number] = species.name.replace(' ','-')
@@ -108,12 +126,16 @@ def tree_nodes_names(dnd_file,species_list):
 
 
 def attr_alignment(species_list,alignment):
+    #input: list of species object instances; clustal results
+    #output: None, changes the object instances, adds attribute of aligned sequence
     for species in species_list:
         for recs in alignment:
             if species.accession_number == recs.id:
                 species.aligned_seq = str(recs.seq)
 
 def lavenshtein_dist(stringA,stringB):
+    #input: two strings
+    #output: lavenshtein (edit) distance between them
     m = len(stringA)
     n = len(stringB)
     d = np.zeros(shape=(m,n))
@@ -128,6 +150,8 @@ def lavenshtein_dist(stringA,stringB):
     return d[m-1,n-1] - 1
 
 def laven_dist_species(species_list,alignment):
+    #input: list of species object instance, alignment sequences
+    #output: matrix (numpy 2d array) with the lavenshtein distances between each species
     attr_alignment(species_list,alignment)
     length = len(species_list)
 
