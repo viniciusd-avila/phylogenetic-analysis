@@ -81,10 +81,10 @@ def clean_data(infile):
             dic[data[i][0]] = data[i][1].replace('\n','')
     return dic
 
-def gen_species(dic):
+def gen_species(dic,dim_red=False):
     species_list = []  
     for key in dic:     
-        x = Species(key.split(' ')[1] + ' ' + key.split(' ')[2], key.split(' ')[0],dic[key])     
+        x = Species(key.split(' ')[1] + ' ' + key.split(' ')[2], key.split(' ')[0],dic[key],dim_red)     
         species_list.append(x)
     return species_list
 
