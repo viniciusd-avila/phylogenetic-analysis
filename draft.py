@@ -13,16 +13,15 @@ aminoacids = ['A','C','G','T']
 codons = list(map((lambda element: ''.join(list(element))), itertools.product(aminoacids,repeat=3)))
 
 def pca_2d(df):
-    X = df.loc[:, df != ('Fragment' and 'labels')].values
+    X = df.loc[:, codons].values
     X = StandardScaler().fit_transform(X)
-    y = df.loc[:, df.columns == 'Fragment'].values
+    y = df.loc[:, codons].values
     pca = PCA(n_components=2)
     return pca.fit_transform(X)
 
 def t_SNE(df):
-    feat_cols = list(filter(lambda x: x != ('Fragment' and 'labels'),df.columns))
     tsne = TSNE(n_components=2, verbose=1, perplexity=40, n_iter=300) 
-    return tsne.fit_transform(df.loc[:,feat_cols].values)
+    return tsne.fit_transform(df.loc[:,codons].values)
 
 def kmeans_plot(self,k,X):
     kmeans = KMeans(n_clusters=k)
