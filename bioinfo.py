@@ -207,4 +207,3 @@ class Species():
         for cdn in codons:
             df[cdn] = df['Fragment'].apply(lambda frgmnt: frgmnt.count(cdn))
         return df
-
